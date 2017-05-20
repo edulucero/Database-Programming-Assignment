@@ -1,0 +1,3 @@
+BEGIN
+COMMON.LOG('Before updating the LOCAL_RM16 table ');
+END:;
