@@ -1,3 +1,16 @@
+// Select statement that adds together all half hour intervals [(HH) 1-48] of a day and divides it by the number of records found WHERE the change date [(CHANGE_DATE) DD/MON/YY] equals a day. //
+
 SELECT r.* , v.*
 FROM NEM_RM16 r, TABLE(VALUE_HH) v
 where TRUNC(CHANGE_DATE) = '22/FEB/17';
+
+DECLARE
+ v_date DATE;
+ v_HH   NUMBER;
+BEGIN
+ sysdate = v_date = (sysdate)
+
+
+day + 1
+loop
+UNTIL v = day + 14
