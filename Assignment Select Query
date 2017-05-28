@@ -5,12 +5,40 @@ FROM NEM_RM16 r, TABLE(VALUE_HH) v
 where TRUNC(CHANGE_DATE) = '22/FEB/17';
 
 DECLARE
- v_date DATE;
- v_HH   NUMBER;
+ v_date   DATE;
+ v_HH     NUMBER;
+ v_volume NUMBER;
+ v_count  
 BEGIN
  sysdate = v_date = (sysdate)
+ 
+SELECT r.* , v.*
+FROM NEM_RM16 r, TABLE(VALUE_HH) v
+where TRUNC(CHANGE_DATE) = '22/FEB/17,
+      HH='1';
+
+
+select TO_CHAR(sysdate, 'DAY') from dual;
+
+SELECT r.* , v.*
+FROM NEM_RM16 r, TABLE(VALUE_HH) v
+WHERE HH='1'and DAY='07/MAR/17' and TNI= 'QMGB' and LR='ENERGEX' and FRMP='RETAINED-C';
+
+SELECT DISTINCT MDP
+FROM NEM_RM16 r, TABLE(VALUE_HH) v
+WHERE HH='1'and DAY='07/MAR/17';
 
 
 day + 1
 loop
 UNTIL v = day + 14
+
+select tni, frmp, lr, mdp, '10-MAY-2017', hh, avg(volume)
+from v_nem_rm16
+group by tni, frmp, lr, mdp, '10-MAY-2017', hh
+
+insert into local_rm16
+(tni, frmp, lr, mdp, day, hh, volume)  --These are the columns you are populating
+(select tni, frmp, lr, mdp, '10-MAY-2017', hh, avg(volume)  -- this is the data
+from v_nem_rm16
+group by tni, frmp, lr, mdp, '10-MAY-2017', hh)
